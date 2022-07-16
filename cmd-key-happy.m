@@ -383,17 +383,17 @@ static CGEventRef handleEvent(CGEventTapProxy proxy, CGEventType type,
 	return NULL;
     }
 
-    // Return unless the event is cmd/alt.
+    // Return unless the event is cmd/ctrl.
 
     if (!((flags & kCGEventFlagMaskCommand) ||
-	  (flags & kCGEventFlagMaskAlternate))) {
+	  (flags & kCGEventFlagMaskControl))) {
 	return event;
     }
 
-    // If both cmd and alt are down then don't swap.
+    // If both cmd and ctrl are down then don't swap.
 
     if ((flags & kCGEventFlagMaskCommand) &&
-	(flags & kCGEventFlagMaskAlternate)) {
+	(flags & kCGEventFlagMaskControl)) {
 	return event;
     }
 
@@ -402,24 +402,24 @@ static CGEventRef handleEvent(CGEventTapProxy proxy, CGEventType type,
     if (luaSwapKeys(event)) {
 	if (flags & kCGEventFlagMaskCommand) {
 	    flags &= ~kCGEventFlagMaskCommand;
-	    flags |= kCGEventFlagMaskAlternate;
+	    flags |= kCGEventFlagMaskControl;
 	    if (flags & NX_DEVICELCMDKEYMASK) {
 		flags &= ~NX_DEVICELCMDKEYMASK;
-		flags |= NX_DEVICELALTKEYMASK;
+		flags |= NX_DEVICELCTLKEYMASK;
 	    }
 	    if (flags & NX_DEVICERCMDKEYMASK) {
 		flags &= ~NX_DEVICERCMDKEYMASK;
-		flags |= NX_DEVICERALTKEYMASK;
+		flags |= NX_DEVICERCTLKEYMASK;
 	    }
-	} else if (flags & kCGEventFlagMaskAlternate) {
-	    flags &= ~kCGEventFlagMaskAlternate;
+	} else if (flags & kCGEventFlagMaskControl) {
+	    flags &= ~kCGEventFlagMaskControl;
 	    flags |= kCGEventFlagMaskCommand;
-	    if (flags & NX_DEVICELALTKEYMASK) {
-		flags &= ~NX_DEVICELALTKEYMASK;
+	    if (flags & NX_DEVICELCTLKEYMASK) {
+		flags &= ~NX_DEVICELCTLKEYMASK;
 		flags |= NX_DEVICELCMDKEYMASK;
 	    }
-	    if (flags & NX_DEVICERALTKEYMASK) {
-		flags &= ~NX_DEVICERALTKEYMASK;
+	    if (flags & NX_DEVICERCTLKEYMASK) {
+		flags &= ~NX_DEVICERCTLKEYMASK;
 		flags |= NX_DEVICERCMDKEYMASK;
 	    }
 	}
