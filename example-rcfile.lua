@@ -8,7 +8,7 @@ function set_contains(t, e)
    return t[e]
 end
 
--- The set of global shortcuts we don't want to swap cmd/alt.
+-- The set of global shortcuts we don't want to swap cmd/ctrl.
 
 global_excludes = Set{ "shift-cmd-tab",
 		       "cmd-tab" }
@@ -16,7 +16,7 @@ global_excludes = Set{ "shift-cmd-tab",
 -- The set of apps we want to consider swapping keys for, with some
 -- notable exclusions. The exclusion means that a "cmd-c" will do the
 -- normal OS Terminal behaviour. If you omit items then you would
--- have to use "alt-c" to close a terminal window.
+-- have to use "ctrl-c" to close a terminal window.
 
 apps = {
    Terminal = { exclude = Set{ "shift-cmd-[",
@@ -50,7 +50,7 @@ dbgprintf = function(s,...)
    if debug then io.write(s:format(...)) end
 end
 
--- Return true to swap cmd/alt, otherwise false.
+-- Return true to swap cmd/ctrl, otherwise false.
 
 -- This function is passed a table comprising the following keys:
 --
