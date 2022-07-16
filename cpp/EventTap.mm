@@ -58,21 +58,21 @@ CGEventRef EventTap::handleEvent(CGEventTapProxy proxy,
   const CGEventFlags flags = CGEventGetFlags(event);
   const KeyEvent keyEvent(event);
 
-  // Return unless the event is cmd/alt.
+  // Return unless the event is cmd/ctrl.
 
-  if (!(keyEvent.isCmdPressed() || keyEvent.isAltPressed())) {
+  if (!(keyEvent.isCmdPressed() || keyEvent.isCtrlPressed())) {
     return event;
   }
 
-  // If both cmd and alt are down then don't swap.
+  // If both cmd and ctrl are down then don't swap.
 
-  if (keyEvent.isCmdPressed() && keyEvent.isAltPressed()) {
+  if (keyEvent.isCmdPressed() && keyEvent.isCtrlPressed()) {
     return event;
   }
 
   if (tap->_lastKeyEvent == keyEvent) {
     if (!tap->_keySequenceExcluded) {
-      KeyEvent::SwapCmdAndAlt(event, flags);
+      KeyEvent::SwapCmdAndCtrl(event, flags);
     }
     return event;
   }
@@ -97,7 +97,7 @@ CGEventRef EventTap::handleEvent(CGEventTapProxy proxy,
       return event;
   }
 
-  return KeyEvent::SwapCmdAndAlt(event, flags);
+  return KeyEvent::SwapCmdAndCtrl(event, flags);
 }
 
 EventTap::EventTap(ProcessSerialNumber psn,

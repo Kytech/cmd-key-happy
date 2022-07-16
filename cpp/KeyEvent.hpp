@@ -72,6 +72,10 @@ class KeyEvent {
   inline bool isCmdPressed() const {
     return _flags & kCGEventFlagMaskCommand;
   }
+  
+  inline bool isCtrlPressed() const {
+    return _flags & kCGEventFlagMaskControl;
+  }
 
   inline bool operator==(const KeyEvent& other) const {
     return _keyID == other._keyID;
